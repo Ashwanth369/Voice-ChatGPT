@@ -1,23 +1,11 @@
-from gtts import gTTS
-from io import BytesIO
-import pygame
-import time
+import speech_recognition as sr
+import pyttsx3 
 
 
-def wait():
-    while pygame.mixer.get_busy():
-        time.sleep(1)
-
-def speak(text, language='en'):
-    mp3_fp = BytesIO()
-    tts = gTTS(text, lang=language)
-    tts.write_to_fp(mp3_fp)
-    mp3_fp.seek(0)
-    sound = pygame.mixer.Sound(mp3_fp)
-    sound.play()
-    wait()
+def textToSpeech(text):     
+    engine = pyttsx3.init()
+    engine.say(text) 
+    engine.runAndWait()
 
 if __name__ == '__main__':
-	pygame.init()
-	pygame.mixer.init()
-	speak("Hello World!")
+    textToSpeech("Hello World!")
