@@ -1,3 +1,4 @@
 pyaudio
 pyttsx3
-speechrecognition
+SpeechRecognition
+kivy
