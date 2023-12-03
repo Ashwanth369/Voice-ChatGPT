@@ -1,7 +1,7 @@
-import pyttsx3 
+import pyttsx3
+#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
 
-
-def textToSpeech(text):     
+def textToSpeech(text):
     engine = pyttsx3.init()
     engine.say(text) 
     engine.runAndWait()
