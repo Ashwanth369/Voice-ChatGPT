@@ -33,6 +33,7 @@ class DemoApp(MDApp):
 
         return self.screen
 
+    #this method is triggered when the button is clicked
     def change_button(self, instance):
         self.screen.remove_widget(self.current_button)
         self.button_idx = 1 - self.button_idx
