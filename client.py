@@ -1,41 +1,26 @@
-import socket, time
+import socket
 
-# Create a socket object
-client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+class ClientApp:
 
-# Get local machine name
-host = socket.gethostname()
+    def __init__(self, host=socket.gethostname(), port=12345, packet_size=1024):
+        self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.host = host
+        self.port = port
+        self.packet_size = packet_size
 
-# Define the port on which you want to connect
-port = 12345
+    def checkConnection(self):
+        try:
+            self.client_socket.recv(1)
+        except socket.error:
+            self.client_socket.close()
+            self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.client_socket.connect((self.host, self.port))
 
-# Connect to the server
-client_socket.connect((host, port))
+    def closeConnection(self):
+        self.client_socket.close()
 
-message = "A"*8000
-
-for i in range(0, len(message), 1024):
-    # Get input from the user to send to the server
-    m = message[i:i+1024]
-
-    # Send the message to the server
-    client_socket.send(m.encode('utf-8'))
-    time.sleep(10)
-
-    try:
-        # Attempt to receive a small amount of data to check if the connection is still open
-        client_socket.recv(1)
-    except socket.error:
-        # If an exception is raised, the connection is closed
-        print("Server closed the connection. Reconnecting...")
-        
-        # Close the current connection
-        client_socket.close()
-
-        # Create a new socket and connect again
-        client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        client_socket.connect((host, port))
-
-
-# Close the connection with the server
-client_socket.close()
+    def sendMessage(self, message):
+        self.checkConnection()
+        for i in range(0, len(message), self.packet_size):
+            msg_chunk = message[i:i+self.packet_size]
+            self.client_socket.send(msg_chunk.encode('utf-8'))
