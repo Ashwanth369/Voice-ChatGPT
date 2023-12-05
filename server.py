@@ -1,6 +1,8 @@
 import socket
 import select
 import time
+import subprocess
+import cpgt
 
 # Create a socket object
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -42,6 +44,10 @@ while True:
             break
 
         print(f"Received message from {addr}: {data}")
+
+        textFromChatGPT = cpgt.sendToGPT(data)
+
+        print(f"Text from CGPT at Server {textFromChatGPT}")
 
     # Close the connection with the client
     client_socket.close()

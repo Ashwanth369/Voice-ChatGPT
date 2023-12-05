@@ -93,8 +93,9 @@ class DemoApp(MDApp):
                 else:
                     text += " " + res
         print("Resulting text to speech:", text)
-        textToSpeech("Hellooo. How are you. I am under the water. Please help me. Here too much raining please save me, uuu u uuu u")
-        self.client_app.sendMessage("Hellooo. How are you. I am under the water. Please help me. Here too much raining please save me, uuu u uuu u")
+        
+        self.client_app.sendMessage("Hello. How are you.")
+        textToSpeech("Hello. How are you")
         del self.results[:]
         
 
