@@ -24,3 +24,7 @@ class ClientApp:
         for i in range(0, len(message), self.packet_size):
             msg_chunk = message[i:i+self.packet_size]
             self.client_socket.send(msg_chunk.encode('utf-8'))
+
+        # Receive the response from the server
+        response = self.client_socket.recv(self.packet_size).decode('utf-8')
+        return response

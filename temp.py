@@ -94,8 +94,8 @@ class DemoApp(MDApp):
                     text += " " + res
         print("Resulting text to speech:", text)
         
-        self.client_app.sendMessage("Hello. How are you.")
-        textToSpeech("Hello. How are you")
+        chatGPTResponse = self.client_app.sendMessage(text)
+        textToSpeech(chatGPTResponse)
         del self.results[:]
         
 

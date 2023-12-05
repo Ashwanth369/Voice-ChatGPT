@@ -45,9 +45,9 @@ while True:
 
         print(f"Received message from {addr}: {data}")
 
-        textFromChatGPT = cpgt.sendToGPT(data)
-
-        print(f"Text from CGPT at Server {textFromChatGPT}")
+        
+    textFromChatGPT = cpgt.sendToGPT(data)
+    client_socket.send(textFromChatGPT.encode('utf-8'))
 
     # Close the connection with the client
     client_socket.close()
