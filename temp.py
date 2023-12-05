@@ -5,8 +5,13 @@ from kivy.clock import Clock
 from textToSpeech import textToSpeech
 import speech_recognition as sr
 import threading
+from client import ClientApp
 
 class DemoApp(MDApp):
+
+    def __init__(self, client_app, **kwargs):
+        super().__init__(**kwargs)
+        self.client_app = client_app
 
     def build(self):
         self.recognizer = sr.Recognizer()
@@ -88,7 +93,8 @@ class DemoApp(MDApp):
                 else:
                     text += " " + res
         print("Resulting text to speech:", text)
-        textToSpeech(text)
+        textToSpeech("Hellooo. How are you. I am under the water. Please help me. Here too much raining please save me, uuu u uuu u")
+        self.client_app.sendMessage("Hellooo. How are you. I am under the water. Please help me. Here too much raining please save me, uuu u uuu u")
         del self.results[:]
         
 
@@ -106,4 +112,5 @@ class DemoApp(MDApp):
     
 if __name__ == "__main__":
     # flag = True
-    DemoApp().run()
+    client_app = ClientApp()
+    DemoApp(client_app).run()
