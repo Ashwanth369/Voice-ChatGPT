@@ -46,6 +46,8 @@ class DemoApp(MDApp):
 
         self.screen.add_widget(self.current_button)
 
+        
+
         return self.screen
     
     def clickHandler(self, instance=None):
@@ -93,9 +95,13 @@ class DemoApp(MDApp):
                 else:
                     text += " " + res
         print("Resulting text to speech:", text)
+
+        if(text is None):
+            textToSpeech("Please provide some input. The input cannot be empty!")
+        else:
+            chatGPTResponse = self.client_app.sendMessage("Hi. Tell me a dad joke")
+            textToSpeech(chatGPTResponse)
         
-        chatGPTResponse = self.client_app.sendMessage(text)
-        textToSpeech(chatGPTResponse)
         del self.results[:]
         
 
@@ -106,7 +112,7 @@ class DemoApp(MDApp):
         except sr.RequestError as e:
             print("Could not request results; {0}".format(e))
         except sr.UnknownValueError:
-            print("unknown error occurred")
+            print("An unknown error occurred")
 
         self.results[idx] = text
         return text

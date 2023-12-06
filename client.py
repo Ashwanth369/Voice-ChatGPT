@@ -26,5 +26,11 @@ class ClientApp:
             self.client_socket.send(msg_chunk.encode('utf-8'))
 
         # Receive the response from the server
-        response = self.client_socket.recv(self.packet_size).decode('utf-8')
+        response = ""
+        while True:
+            chunk = self.client_socket.recv(self.packet_size).decode('utf-8')
+            if not chunk:
+                break  # No more data to receive
+            response += chunk
+        
         return response

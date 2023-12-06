@@ -56,7 +56,5 @@ while True:
         msg_chunk = textFromChatGPT[i:i+packet_size]
         client_socket.send(msg_chunk.encode('utf-8'))
 
-    # client_socket.send(textFromChatGPT.encode('utf-8'))
-
     # Close the connection with the client
     client_socket.close()
