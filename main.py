@@ -1,5 +1,4 @@
 
-import time
 from kivymd.app import MDApp
 from kivymd.uix.button import MDFloatingActionButton
 from kivymd.uix.screen import Screen
@@ -29,7 +28,6 @@ class VoicChatGPTApp(MDApp):
         self.theme_cls.theme_style = "Dark"
         
         self.screen = Screen()
-        layout = BoxLayout(orientation='vertical')
         
         self.buttons = [
             MDFloatingActionButton(icon="microphone",
@@ -85,10 +83,8 @@ class VoicChatGPTApp(MDApp):
     def toggleRecording(self):
         if self.recording:
             self.recording = False
-            print("Stop Recording...")
         else:
             self.recording = True
-            print("Start Recording...")
             thread = threading.Thread(target=self.record)
             thread.start()
             self.threads.append(thread)
@@ -141,5 +137,5 @@ class VoicChatGPTApp(MDApp):
         return text
     
 if __name__ == "__main__":
-    client_app = ClientApp()
+    client_app = ClientApp(host="3.17.4.67", port=12345)
     VoicChatGPTApp(client_app).run()

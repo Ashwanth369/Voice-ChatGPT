@@ -2,11 +2,12 @@ import socket
 
 class ClientApp:
 
-    def __init__(self, host=socket.gethostname(), port=12345, packet_size=1024):
+    def __init__(self, host=socket.gethostname(), port=12345, packet_size=100):
         self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.host = host
         self.port = port
         self.packet_size = packet_size
+        self.client_socket.connect((self.host, self.port))
 
     def checkConnection(self):
         try:
@@ -20,8 +21,6 @@ class ClientApp:
         self.client_socket.close()
 
     def sendMessage(self, message):
-        self.checkConnection()
-        print("CLIENT MESSAGE:", message)
         for i in range(0, len(message), self.packet_size):
             msg_chunk = message[i:i+self.packet_size]
             self.client_socket.send(msg_chunk.encode('utf-8'))
@@ -39,5 +38,5 @@ class ClientApp:
     
 
 if __name__ == "__main__":
-    ca = ClientApp()
-    print(ca.sendMessage("A"*8000))
+    ca = ClientApp(host="3.17.4.67", port=12345)
+    print(ca.sendMessage("How are you doing"))

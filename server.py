@@ -3,12 +3,12 @@ import socket
 import threading
 import time
 
-def handle_client(client_socket, address, packet_size=1024, timeout=60):
+def handle_client(client_socket, address, packet_size=100, timeout=60):
     print(f"Connected to client: {address}")
     client_request = ""
     start_time = time.time()
     while time.time() - start_time <= timeout:
-        data = client_socket.recv(1024).decode('utf-8')
+        data = client_socket.recv(packet_size).decode('utf-8')
         if "!REQUEST!" in data:
             client_request += data.split("!REQUEST!")[0]
             print("SERVER: ", client_request)
