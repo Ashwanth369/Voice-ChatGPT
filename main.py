@@ -1,7 +1,10 @@
+
+import time
 from kivymd.app import MDApp
 from kivymd.uix.button import MDFloatingActionButton
 from kivymd.uix.screen import Screen
 from kivymd.uix.spinner import MDSpinner
+from kivy.uix.boxlayout import BoxLayout
 from kivy.clock import Clock
 from textToSpeech import textToSpeech
 import speech_recognition as sr
@@ -26,6 +29,7 @@ class VoicChatGPTApp(MDApp):
         self.theme_cls.theme_style = "Dark"
         
         self.screen = Screen()
+        layout = BoxLayout(orientation='vertical')
         
         self.buttons = [
             MDFloatingActionButton(icon="microphone",
@@ -38,12 +42,13 @@ class VoicChatGPTApp(MDApp):
                                    theme_icon_color="Custom",
                                    md_bg_color="#e9dff7",
                                    icon_color="#6851a5"),
-            MDSpinner(
-                size_hint=(None, None),
-                pos_hint={"center_x": 0.5, "center_y": 0.5},
-                active=True,
-            )
         ]
+
+        self.spinner = MDSpinner(
+            size_hint=(None, None),
+            pos_hint={"center_x": 0.5, "y": 0.1},
+            active=False,
+        )
         
         self.button_idx = 0
         self.current_button = self.buttons[self.button_idx]
@@ -52,38 +57,41 @@ class VoicChatGPTApp(MDApp):
             self.buttons[idx].bind(on_press=self.clickHandler)
 
         self.screen.add_widget(self.current_button)
+        self.screen.add_widget(self.spinner)
         return self.screen
     
-    def clickHandler(self, instance=None, do_nothing=False):
-        recorder_thread = threading.Thread(target=self.toggleRecording, args=(do_nothing,))
-        recorder_thread.start()
-        self.threads.append(recorder_thread)
-        self.screen.remove_widget(self.current_button)
-        self.button_idx = (self.button_idx + 1) % 2
-        print(self.button_idx)
-        self.current_button = self.buttons[self.button_idx]
-        self.screen.add_widget(self.current_button)
+    def clickHandler(self, instance=None):
+        threading.Thread(target=self.toggleRecording).start()
+        if self.button_idx == 1:
+            self.screen.remove_widget(self.buttons[1])
+            self.button_idx = 0
+            self.spinner.active = True
+            threading.Thread(target=self.processRecording).start()
+        else:
+            self.screen.remove_widget(self.buttons[0])
+            self.button_idx = 1
+            self.screen.add_widget(self.buttons[1])
 
-    # def joinThreads(self):
-    #     # Join the threads when button_idx is 2
-    #     for thread in self.threads:
-    #         thread.join()
-    #     self.threads = []
-    #     self.clickHandler(do_nothing=True)
+    def processRecording(self):
+        for thread in self.threads:
+            thread.join()
+        self.threads = []
+        Clock.schedule_once(self.deactivate_spinner, 0)
 
+    def deactivate_spinner(self, dt):
+        self.spinner.active = False
+        self.screen.add_widget(self.buttons[0])
 
-    def toggleRecording(self, do_nothing=False):
-        if not do_nothing:
-            if self.recording:
-                self.recording = False
-                print("Stop Recording...")
-                # if self.button_idx == 2:
-                #     # Schedule joining threads on the main thread
-                #     Clock.schedule_once(lambda dt: self.joinThreads(), 0)
-            else:
-                self.recording = True
-                print("Start Recording...")
-                threading.Thread(target=self.record).start()
+    def toggleRecording(self):
+        if self.recording:
+            self.recording = False
+            print("Stop Recording...")
+        else:
+            self.recording = True
+            print("Start Recording...")
+            thread = threading.Thread(target=self.record)
+            thread.start()
+            self.threads.append(thread)
 
     def record(self):
         while self.recording:
@@ -121,7 +129,6 @@ class VoicChatGPTApp(MDApp):
             textToSpeech(chatGPTResponse)
         
         del self.results[:]
-        
 
     def speechToText(self, audio, idx):
         text = ""

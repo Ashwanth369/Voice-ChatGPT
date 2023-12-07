@@ -3,5 +3,3 @@ SpeechRecognition
 kivymd
 openai
 kivy
-Cython==0.29.33
-PyAudio
