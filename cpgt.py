@@ -1,6 +1,6 @@
 import openai 
 
-client = openai.OpenAI(api_key = "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")
+client = openai.OpenAI(api_key = "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")
 
 def sendToGPT(data):
 

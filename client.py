@@ -21,16 +21,23 @@ class ClientApp:
 
     def sendMessage(self, message):
         self.checkConnection()
+        print("CLIENT MESSAGE:", message)
         for i in range(0, len(message), self.packet_size):
             msg_chunk = message[i:i+self.packet_size]
             self.client_socket.send(msg_chunk.encode('utf-8'))
+        self.client_socket.send("!REQUEST!".encode('utf-8'))
 
-        # Receive the response from the server
         response = ""
         while True:
             chunk = self.client_socket.recv(self.packet_size).decode('utf-8')
-            if not chunk:
-                break  # No more data to receive
+            if "!RESPONSE!" in chunk:
+                response += chunk.split("!RESPONSE!")[0]
+                break
             response += chunk
         
         return response
+    
+
+if __name__ == "__main__":
+    ca = ClientApp()
+    print(ca.sendMessage("A"*8000))
