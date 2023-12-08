@@ -1,4 +1,4 @@
-import cpgt
+import cgpt
 import socket
 import threading
 import time
@@ -10,10 +10,11 @@ def handle_client(client_socket, address, packet_size=100, timeout=60):
     while time.time() - start_time <= timeout:
         data = client_socket.recv(packet_size).decode('utf-8')
         if "!REQUEST!" in data:
+            print(data)
             client_request += data.split("!REQUEST!")[0]
             print("SERVER: ", client_request)
             try:
-                client_response = cpgt.sendToGPT(client_request)
+                client_response = cgpt.sendToGPT(client_request)
             except Exception:
                 client_response = "Sorry! I Couldn't understand that."
 
@@ -22,6 +23,8 @@ def handle_client(client_socket, address, packet_size=100, timeout=60):
                 msg_chunk = client_response[i:i+packet_size]
                 client_socket.send(msg_chunk.encode('utf-8'))
             client_socket.send("!RESPONSE!".encode('utf-8'))
+            client_request = ""
+            data = ""
         if not data:
             client_request = ""
         else:
@@ -41,7 +44,6 @@ def main():
     print(f"Server listening on {host}:{port}")
 
     client_threads = []
-
     try:
         while True:
             client_socket, address = server_socket.accept()

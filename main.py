@@ -99,7 +99,7 @@ class VoicChatGPTApp(MDApp):
                 while self.recording:
                     try:
                         idx += 1
-                        audio = self.recognizer.listen(source, 5, 3)
+                        audio = self.recognizer.listen(source, 5, 4)
                         task = threading.Thread(target=self.speechToText, args=(audio,idx,), daemon=True)
                         tasks.append(task)
                         task.start()

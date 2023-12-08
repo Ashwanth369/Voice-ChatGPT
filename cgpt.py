@@ -1,6 +1,6 @@
 import openai 
 
-client = openai.OpenAI(api_key = "YOUR OPENAI API KEY")
+client = openai.OpenAI(api_key = "OPEN_API_KEY")
 
 def sendToGPT(data):
     completion = client.chat.completions.create(

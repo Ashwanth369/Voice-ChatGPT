@@ -9,21 +9,19 @@ class ClientApp:
         self.packet_size = packet_size
         self.client_socket.connect((self.host, self.port))
 
-    def checkConnection(self):
-        try:
-            self.client_socket.recv(1)
-        except socket.error:
-            self.client_socket.close()
-            self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.client_socket.connect((self.host, self.port))
-
     def closeConnection(self):
         self.client_socket.close()
 
     def sendMessage(self, message):
         for i in range(0, len(message), self.packet_size):
             msg_chunk = message[i:i+self.packet_size]
-            self.client_socket.send(msg_chunk.encode('utf-8'))
+            try:
+                self.client_socket.send(msg_chunk.encode('utf-8'))
+            except socket.error:
+                self.client_socket.close()
+                self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                self.client_socket.connect((self.host, self.port))
+
         self.client_socket.send("!REQUEST!".encode('utf-8'))
 
         response = ""
@@ -38,5 +36,6 @@ class ClientApp:
     
 
 if __name__ == "__main__":
-    ca = ClientApp(host="3.17.4.67", port=12345)
+    # ca = ClientApp(host="3.17.4.67", port=12345)
+    ca = ClientApp()
     print(ca.sendMessage("How are you doing"))
