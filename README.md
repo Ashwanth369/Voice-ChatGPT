@@ -27,7 +27,9 @@
   `$ git clone https://github.com/Ashwanth369/Voice-ChatGPT.git`
 2. Open the folder <br>
   `$ cd Voice-ChatGPT`
-3. Open a terminal and run the main.py file using this command <br>
+3. Install the necessary modules <br>
+  `$ pip install -r requirements.txt`
+4. Open a terminal and run the main.py file using this command <br>
   `$ python3 main.py`
-4. The application window opens up. Hit the microphone button and give the input speech.
-5. Hit the Stop button and wait for the output response speech.
+5. The application window opens up. Hit the microphone button and give the input speech.
+6. Hit the Stop button and wait for the output response speech.
