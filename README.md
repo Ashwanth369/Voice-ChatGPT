@@ -23,7 +23,7 @@
 2. The server is already up and running and we also have the Open AI secret API key in the cgpt.py file. You don't need to start any server or create any new Open AI account.
 
 #### **App**
-3. Download the code from github
+3. Download the code from github <br>
   $ git clone https://github.com/Ashwanth369/Voice-ChatGPT.git
 5. Open the folder
   $ cd Voice-ChatGPT
