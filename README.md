@@ -1,20 +1,20 @@
 # **Voice ChatGPT**
 
 ### **Source Files**
-1. main.py
-    -> This is the main file that runs on the android device. It has the code for the UI, invocation to TTS and STT files for the functionalities
-2. requirements.txt
-    -> This files contains the list of modules you need to download for running the application
-3. speechToText.py
-    -> It contains the code for the Speech-to-Text integration
-4. textToSpeech.py
-    -> It contains the code for the Text-to-Speech integration
-5. client.py
-    -> This file is used to communicate with the server via socket programming. Its sends the converted input speech from the user in the form of chunks 
-6. server.py 
-    -> It contains the code to run as the server processing all the queries it receives from the client. It receives the response from the Open AI API and sends it back to the client at text in the form of chunks
-7. cgpt.py
-    -> This file contains the ChatGPT integration code and also the the Open AI secret API key used to authenticate the API access for the application
+1. main.py: <br>
+    This is the main file that runs on the android device. It has the code for the UI, invocation to TTS and STT files for the functionalities
+2. requirements.txt: <br>
+    This files contains the list of modules you need to download for running the application
+3. speechToText.py: <br>
+    It contains the code for the Speech-to-Text integration
+4. textToSpeech.py: <br>
+    It contains the code for the Text-to-Speech integration
+5. client.py: <br>
+    This file is used to communicate with the server via socket programming. Its sends the converted input speech from the user in the form of chunks 
+6. server.py: <br>
+    It contains the code to run as the server processing all the queries it receives from the client. It receives the response from the Open AI API and sends it back to the client at text in the form of chunks
+7. cgpt.py: <br>
+    This file contains the ChatGPT integration code and also the the Open AI secret API key used to authenticate the API access for the application
 
 ### **User Manual:**
 
