@@ -23,11 +23,11 @@
 2. The server is already up and running and we also have the Open AI secret API key in the cgpt.py file. You don't need to start any server or create any new Open AI account.
 
 #### **App**
-3. Download the code from github <br>
+1. Download the code from github <br>
   `$ git clone https://github.com/Ashwanth369/Voice-ChatGPT.git`
-5. Open the folder <br>
-  $ cd Voice-ChatGPT
-6. Open a terminal and run the main.py file using this command <br>
-  $ python3 main.py
-8. The application window opens up. Hit the microphone button and give the input speech.
-9. Hit the Stop button and wait for the output response speech.
+2. Open the folder <br>
+  `$ cd Voice-ChatGPT`
+3. Open a terminal and run the main.py file using this command <br>
+  `$ python3 main.py`
+4. The application window opens up. Hit the microphone button and give the input speech.
+5. Hit the Stop button and wait for the output response speech.
