@@ -24,8 +24,10 @@
 
 #### **App**
 3. Download the code from github
+<br>
   $ git clone https://github.com/Ashwanth369/Voice-ChatGPT.git
-4. Open the folder
+</br>
+5. Open the folder
   $ cd Voice-ChatGPT
 6. Open a terminal and run the main.py file using this command
   $ python3 main.py
