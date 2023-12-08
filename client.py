@@ -36,6 +36,5 @@ class ClientApp:
     
 
 if __name__ == "__main__":
-    # ca = ClientApp(host="3.17.4.67", port=12345)
     ca = ClientApp()
     print(ca.sendMessage("How are you doing"))
